@@ -29,4 +29,12 @@ public class AccountService {
     public List<Account> getAll () {
         return accountRepository.findAll();
     }
+
+    @Transactional
+    public void deleteById(Long id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Konto o id " + id + "nie istnieje"));
+        accountRepository.delete(account);
+
+    }
 }
