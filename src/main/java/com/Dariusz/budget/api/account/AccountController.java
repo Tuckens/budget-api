@@ -5,10 +5,7 @@ import com.Dariusz.budget.api.account.dto.CreateAccountRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -24,6 +21,11 @@ public class AccountController {
         Account saved = accountService.create(request);
         URI location = URI.create("/api/accounts/" + saved.getId());
         return ResponseEntity.created(location).body(saved);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> getById (@PathVariable Long id) {
+        return ResponseEntity.ok(accountService.getById(id));
     }
 
 }
