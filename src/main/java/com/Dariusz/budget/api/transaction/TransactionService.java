@@ -3,6 +3,7 @@ package com.Dariusz.budget.api.transaction;
 
 import com.Dariusz.budget.api.account.Account;
 import com.Dariusz.budget.api.account.AccountRepository;
+import com.Dariusz.budget.api.common.AccountHasTransactionsException;
 import com.Dariusz.budget.api.common.ResourceNotFoundException;
 import com.Dariusz.budget.api.transaction.dto.CreateTransactionRequest;
 import lombok.RequiredArgsConstructor;

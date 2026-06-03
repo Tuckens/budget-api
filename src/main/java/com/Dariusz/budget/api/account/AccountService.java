@@ -1,6 +1,7 @@
 package com.Dariusz.budget.api.account;
 
 import com.Dariusz.budget.api.account.dto.CreateAccountRequest;
+import com.Dariusz.budget.api.common.AccountHasTransactionsException;
 import com.Dariusz.budget.api.common.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,10 @@ public class AccountService {
     public void deleteById(Long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Konto o id " + id + "nie istnieje"));
+
+        if (accountRepository.hasTransactions(id)) {
+            throw new AccountHasTransactionsException("Nie mozna usunuąć konta z transakcjami!");
+        }
         accountRepository.delete(account);
 
     }
