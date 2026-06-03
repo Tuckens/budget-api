@@ -47,4 +47,9 @@ public class TransactionService {
        return transactionRepository.save(transaction);
     }
 
+    @Transactional(readOnly = true)
+    public Transaction getById(Long id) {
+        return transactionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transakcja o id " + id + " nie istnieje"));
+    }
 }

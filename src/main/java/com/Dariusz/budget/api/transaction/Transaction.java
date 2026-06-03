@@ -1,6 +1,8 @@
 package com.Dariusz.budget.api.transaction;
 
 import com.Dariusz.budget.api.account.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +43,7 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
     private Account account;
 
