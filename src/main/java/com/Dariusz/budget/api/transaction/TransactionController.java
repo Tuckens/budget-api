@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,7 +41,12 @@ public class TransactionController {
 
 
     @GetMapping
-    public ResponseEntity<List<Transaction>> getAll () {
-        return ResponseEntity.ok(transactionService.getAll());
+    public ResponseEntity<List<Transaction>> getAll (
+        @RequestParam(required = false) String category,
+        @RequestParam(required = false) LocalDate from,
+        @RequestParam(required = false) LocalDate to) {
+
+        List<Transaction> transactions = transactionService.getAllWithFilters(category, from, to);
+        return ResponseEntity.ok(transactions);
     }
 }

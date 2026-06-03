@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -74,8 +75,10 @@ public class TransactionService {
 
 
     @Transactional(readOnly = true)
-    public List<Transaction> getAll() {
-        return transactionRepository.findAll();
-
+    public List<Transaction> getAllWithFilters(String category, LocalDate from, LocalDate to) {
+        LocalDateTime fromDateTime = (from != null) ? from.atStartOfDay() : null;
+        LocalDateTime toDateTime = (to != null) ? to.atTime(23, 59, 59) : null;
+        return transactionRepository.findAllWithFilters(category, fromDateTime, toDateTime);
     }
+
 }
