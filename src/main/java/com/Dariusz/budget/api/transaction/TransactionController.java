@@ -1,0 +1,30 @@
+package com.Dariusz.budget.api.transaction;
+
+
+import com.Dariusz.budget.api.transaction.dto.CreateTransactionRequest;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
+
+@RestController
+@RequestMapping("/api/transactions")
+@RequiredArgsConstructor
+
+public class TransactionController {
+    private final TransactionService transactionService;
+
+
+    @PostMapping
+    public ResponseEntity<Transaction> create (@Valid @RequestBody CreateTransactionRequest request){
+        Transaction saved = transactionService.create(request);
+        URI location = URI.create("/api/transactions/" + saved.getId());
+        return ResponseEntity.created(location).body(saved);
+
+    }
+}

@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -31,7 +33,7 @@ public class TransactionService {
         transaction.setAmount(request.getAmount());
         transaction.setType(request.getType());
         transaction.setCategory(request.getCategory());
-        transaction.setDate(request.getDate());
+        transaction.setDate(request.getDate() != null ? request.getDate() : LocalDateTime.now());
         transaction.setDescription(request.getDescription());
 
        if(request.getType() == Transaction.TransactionType.INCOME) {
