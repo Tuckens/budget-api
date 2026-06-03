@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +52,29 @@ public class TransactionService {
     public Transaction getById(Long id) {
         return transactionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Transakcja o id " + id + " nie istnieje"));
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        Transaction transaction = transactionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Transakcja o id " + id + " nie istnieje"));
+
+        Account account = transaction.getAccount();
+
+        if (transaction.getType() == Transaction.TransactionType.INCOME) {
+            account.setBalance(account.getBalance().subtract(transaction.getAmount()));
+        } else {
+            account.setBalance(account.getBalance().add(transaction.getAmount()));
+        }
+
+        accountRepository.save(account);
+        transactionRepository.delete(transaction);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<Transaction> getAll() {
+        return transactionRepository.findAll();
+
     }
 }
