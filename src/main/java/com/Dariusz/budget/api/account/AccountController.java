@@ -6,8 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -26,6 +26,11 @@ public class AccountController {
     @GetMapping("/{id}")
     public ResponseEntity<Account> getById (@PathVariable Long id) {
         return ResponseEntity.ok(accountService.getById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Account>> getAll () {
+        return ResponseEntity.ok(accountService.getAll());
     }
 
 }

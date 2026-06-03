@@ -5,6 +5,7 @@ import com.Dariusz.budget.api.common.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,5 +23,10 @@ public class AccountService {
     public Account getById (Long id) {
         return accountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Konto o id " + id + "nie istnieje"));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Account> getAll () {
+        return accountRepository.findAll();
     }
 }
