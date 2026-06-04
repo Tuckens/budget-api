@@ -34,7 +34,7 @@ public class AccountService {
     @Transactional
     public void deleteById(Long id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Konto o id " + id + "nie istnieje"));
+                .orElseThrow(() -> new ResourceNotFoundException("Konto o id " + id + " nie istnieje"));
 
         if (accountRepository.hasTransactions(id)) {
             throw new AccountHasTransactionsException("Nie mozna usunuąć konta z transakcjami!");
