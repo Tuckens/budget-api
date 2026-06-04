@@ -6,13 +6,18 @@ import com.Dariusz.budget.api.account.AccountRepository;
 import com.Dariusz.budget.api.common.AccountHasTransactionsException;
 import com.Dariusz.budget.api.common.ResourceNotFoundException;
 import com.Dariusz.budget.api.transaction.dto.CreateTransactionRequest;
+import com.Dariusz.budget.api.transaction.dto.SummaryResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -75,10 +80,42 @@ public class TransactionService {
 
 
     @Transactional(readOnly = true)
-    public List<Transaction> getAllWithFilters(String category, LocalDate from, LocalDate to) {
+    public List<Transaction> getAllWithFilters(String category, Long accountId, LocalDate from, LocalDate to) {
         LocalDateTime fromDateTime = (from != null) ? from.atStartOfDay() : null;
         LocalDateTime toDateTime = (to != null) ? to.atTime(23, 59, 59) : null;
-        return transactionRepository.findAllWithFilters(category, fromDateTime, toDateTime);
+        return transactionRepository.findAllWithFilters(category, fromDateTime, toDateTime, accountId);
+    }
+
+    @Transactional(readOnly = true)
+    public SummaryResponse getSummary(Long accountId, LocalDate from, LocalDate to) {
+        LocalDateTime fromDateTime = (from != null) ? from.atStartOfDay() : null;
+        LocalDateTime toDateTime = (to != null) ? to.atTime(23, 59, 59) : null;
+
+        List<Transaction> transactions = transactionRepository.findAllWithFilters(
+                null,
+                fromDateTime,
+                toDateTime,
+                accountId
+        );
+
+        BigDecimal totalIncome = BigDecimal.ZERO;
+        BigDecimal totalExpense = BigDecimal.ZERO;
+        Map<String, BigDecimal> expensesByCategory = new HashMap<>();
+
+        for (Transaction t : transactions) {
+            if (t.getType() == Transaction.TransactionType.INCOME) {
+                totalIncome = totalIncome.add(t.getAmount());
+            } else {
+                totalExpense = totalExpense.add(t.getAmount());
+                expensesByCategory.merge(t.getCategory(), t.getAmount(), BigDecimal::add);
+            }
+        }
+
+        return  SummaryResponse.builder().totalIncome(totalIncome)
+                .totalExpense(totalExpense)
+                .expensesByCategory(expensesByCategory)
+                .build();
+
     }
 
 }
