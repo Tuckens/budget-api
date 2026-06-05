@@ -1,5 +1,6 @@
 package com.Dariusz.budget.api.common;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -57,7 +58,13 @@ public class GlobalExceptionHandler {
 
     // 500
     @ExceptionHandler(Exception.class)
-    public ProblemDetail handleGeneral(Exception exception) {
+    public ProblemDetail handleGeneral(Exception exception, HttpServletRequest request) {
+        String path = request.getRequestURI();
+        if (path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs") || path.startsWith("/api-docs")) {
+            return null;
+        }
+
+
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 "Wystąpił nieoczekiwany błąd. Spróbuj ponownie później."

@@ -11,8 +11,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Query("SELECT t FROM Transaction t WHERE " +
             "(:category IS NULL OR t.category = :category) AND " +
-            "(:from is NULL OR t.date >= :from) AND " +
-            "(:to IS NULL OR t.date <= :to) AND " +
+            "(t.date >= :from AND t.date <= :to) AND " +
+            "(t.date <= :to) AND " +
             "(:accountId IS NULL OR t.account.id = :accountId)")
 
     List<Transaction> findAllWithFilters(@Param("category") String category,

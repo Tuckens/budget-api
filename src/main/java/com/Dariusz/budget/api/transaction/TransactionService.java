@@ -81,15 +81,15 @@ public class TransactionService {
 
     @Transactional(readOnly = true)
     public List<Transaction> getAllWithFilters(String category, Long accountId, LocalDate from, LocalDate to) {
-        LocalDateTime fromDateTime = (from != null) ? from.atStartOfDay() : null;
-        LocalDateTime toDateTime = (to != null) ? to.atTime(23, 59, 59) : null;
+        LocalDateTime fromDateTime = (from != null) ? from.atStartOfDay() :  LocalDateTime.of(1900, 1, 1, 0, 0);
+        LocalDateTime toDateTime = (to != null) ? to.atTime(23, 59, 59) : LocalDateTime.of(9999,12, 31, 23, 59, 49);
         return transactionRepository.findAllWithFilters(category, fromDateTime, toDateTime, accountId);
     }
 
     @Transactional(readOnly = true)
     public SummaryResponse getSummary(Long accountId, LocalDate from, LocalDate to) {
-        LocalDateTime fromDateTime = (from != null) ? from.atStartOfDay() : null;
-        LocalDateTime toDateTime = (to != null) ? to.atTime(23, 59, 59) : null;
+        LocalDateTime fromDateTime = (from != null) ? from.atStartOfDay() : LocalDateTime.of(1900, 1, 1, 0, 0);
+        LocalDateTime toDateTime = (to != null) ? to.atTime(23, 59, 59) : LocalDateTime.of(9999,12, 31, 23, 59, 49);
 
         List<Transaction> transactions = transactionRepository.findAllWithFilters(
                 null,
