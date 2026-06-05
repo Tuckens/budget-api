@@ -1,8 +1,9 @@
 package com.Dariusz.budget.api.transaction;
 
-import com.Dariusz.budget.api.account.Account;
-import com.Dariusz.budget.api.account.AccountRepository;
-import com.Dariusz.budget.api.transaction.dto.CreateTransactionRequest;
+import com.Dariusz.budget.api.repository.AccountRepository;
+import com.Dariusz.budget.api.models.Account;
+import com.Dariusz.budget.api.models.Transaction;
+import com.Dariusz.budget.api.dto.CreateTransactionRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

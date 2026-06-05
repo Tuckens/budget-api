@@ -1,4 +1,4 @@
-package com.Dariusz.budget.api.common;
+package com.Dariusz.budget.api.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

@@ -1,8 +1,10 @@
-package com.Dariusz.budget.api.account;
+package com.Dariusz.budget.api.service;
 
-import com.Dariusz.budget.api.account.dto.CreateAccountRequest;
-import com.Dariusz.budget.api.common.AccountHasTransactionsException;
-import com.Dariusz.budget.api.common.ResourceNotFoundException;
+import com.Dariusz.budget.api.repository.AccountRepository;
+import com.Dariusz.budget.api.dto.CreateAccountRequest;
+import com.Dariusz.budget.api.exception.AccountHasTransactionsException;
+import com.Dariusz.budget.api.exception.ResourceNotFoundException;
+import com.Dariusz.budget.api.models.Account;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

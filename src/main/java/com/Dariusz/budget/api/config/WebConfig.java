@@ -1,4 +1,4 @@
-package com.Dariusz.budget.api.common;
+package com.Dariusz.budget.api.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

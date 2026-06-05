@@ -1,6 +1,6 @@
-package com.Dariusz.budget.api.transaction.dto;
+package com.Dariusz.budget.api.dto;
 
-import com.Dariusz.budget.api.transaction.Transaction;
+import com.Dariusz.budget.api.models.Transaction;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

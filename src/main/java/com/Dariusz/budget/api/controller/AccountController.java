@@ -1,9 +1,11 @@
-package com.Dariusz.budget.api.account;
+package com.Dariusz.budget.api.controller;
 
-import com.Dariusz.budget.api.account.dto.CreateAccountRequest;
+import com.Dariusz.budget.api.service.AccountService;
+import com.Dariusz.budget.api.dto.CreateAccountRequest;
 import com.Dariusz.budget.api.common.ApiError400;
 import com.Dariusz.budget.api.common.ApiError404;
 import com.Dariusz.budget.api.common.ApiError409;
+import com.Dariusz.budget.api.models.Account;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

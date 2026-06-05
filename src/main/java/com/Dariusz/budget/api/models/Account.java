@@ -1,6 +1,5 @@
-package com.Dariusz.budget.api.account;
+package com.Dariusz.budget.api.models;
 
-import com.Dariusz.budget.api.transaction.Transaction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;

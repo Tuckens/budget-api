@@ -1,5 +1,6 @@
-package com.Dariusz.budget.api.transaction;
+package com.Dariusz.budget.api.repository;
 
+import com.Dariusz.budget.api.models.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

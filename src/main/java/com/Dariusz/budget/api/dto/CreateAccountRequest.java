@@ -1,4 +1,4 @@
-package com.Dariusz.budget.api.account.dto;
+package com.Dariusz.budget.api.dto;
 
 
 import lombok.Data;
